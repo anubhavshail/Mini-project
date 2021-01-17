@@ -13,7 +13,7 @@ struct
 {
     char name[80];
     char id[50];
-    int rollno;
+    long int rollno;
 
 }student;
 
@@ -21,10 +21,10 @@ int main(void)
 {
     int choice;
     FILE *fp;
-    fp = fopen("studentrecord", "rb+");
+    fp = fopen("studentrecord1", "rb+");
     if(fp==NULL)
     {
-        fp = fopen("studentrecord", "wb+");
+        fp = fopen("studentrecord1", "wb+");
         if(fp==NULL)
         {
             puts("Error in opening file\n");
