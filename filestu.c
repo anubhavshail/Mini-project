@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
+#include<conio.h>
 
 void insert(FILE *fp);
 void del(FILE *fp);
@@ -71,13 +72,13 @@ int main(void)
 void insert(FILE *fp)
 {
     fseek(fp,0,2);
+    fflush(stdin);
     printf("Name: \n");
-    gets(student.name);
     gets(student.name);
     printf("ID: \n");
     scanf("%s",student.id);
     printf("Roll No: \n");
-    scanf("%ld",&student.rollno);
+    scanf("%lld",&student.rollno);
     fwrite(&student,sizeof(student),1,fp);
 }//End of insert//
 
@@ -86,7 +87,8 @@ void del(FILE *fp)
     FILE *fptmp;
     char name[50];
     printf("Enter the name of student to be deleted from database: \n");
-    scanf("%s",name);
+    gets(name);
+
     if(search(fp,name)==0)
         return;
     fptmp = fopen("tempfile","wb+");
@@ -98,27 +100,29 @@ void del(FILE *fp)
     }
     fclose(fp);
     fclose(fptmp);
-    remove("studentrecord");
-    rename("tempfile","studentrecord");
+    remove("studentrecord1");
+    rename("tempfile1","studentrecord1");
     printf("\nRecord deleted..........\n\n");
-    fp=fopen("studentrecord", "rb+");
+    fp=fopen("studentrecord1", "rb+");
 }
 
 void modify(FILE *fp)
 {
     char name[50];
-    long size=sizeof(student);
+    long long size=sizeof(student);
     printf("Enter the name of the student to be modified  : ");
-    scanf("%s",name);
+    fflush(stdin);
+    gets(name);
     if(search(fp,name) == 1)
     {
         printf("Enter new data.....\n\n");
         printf("Name: \n");
-        scanf("%s",student.name);
+        fflush(stdin);
+        gets(student.name);
         printf("ID: \n");
         scanf("%s",student.id);
         printf("Roll No: \n");
-        scanf("%d",student.rollno);
+        scanf("%lld",student.rollno);
         fseek(fp,-size,1);
         fwrite(&student,sizeof(student),1,fp);
         printf("\nRecord successfully modified\n\n");
@@ -129,7 +133,7 @@ void display(FILE *fp)
 {
     char name[50];
     printf("Enter the name of student : \n");
-    scanf("%s",name);
+    gets(name);
     if(search(fp,name) == 1)
     {
         printf("\nName\t%s\n",student.name);
